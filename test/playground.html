@@ -25,32 +25,11 @@
     </head>
   <body>
     <div>
-      <textarea id="textarea"><html><head><style>
-#foo {
-  background: white;
-}
-body {
-  color: red !important;
-  background: green;
-  padding: 2px;
-  padding-left: 1px;
-}
-div {
-  height: 10px;
-  background: blue;
-  margin-top: 10px;
-}
-</style>
-</head>
-<body id="foo">
-  <span>foo</span>bar
-  <div>
-    <div style="background: green; margin: 10px;">div2</div>
-  </div>
-  <div style="background: green;"><div style="margin: 20px; margin-top: 20px; background: red;">div2</div></div>
-  <div>div3</div>
-</body>
-</html></textarea>
+      <select id="select">
+        <option value="0">orig</option>
+        <option value="1">toy-layout-engine</option>
+      </select>
+      <textarea id="textarea"></textarea>
       <button id="button">Render</button>
     </div>
     <canvas id="canvas"></canvas>
@@ -58,7 +37,85 @@ div {
       var textarea = document.getElementById('textarea');
       var button = document.getElementById('button');
       var canvas = document.getElementById('canvas');
-
+      var select = document.getElementById('select');
+      
+      var preloads = [
+`<html>
+<head>
+  <style>
+  #foo {
+  background: yellow;
+  }
+  body {
+  color: red !important;
+  background: green;
+  padding: 2px;
+  padding-left: 1px;
+  }
+  div {
+  height: 10px;
+  background: blue;
+  margin-top: 10px;
+  }
+  </style>
+</head>
+<body id="foo">
+  <span>foo</span>bar
+  <div>
+    <div style="background: green; margin: 10px;">div2</div>
+  </div>
+  <div style="background: green;">
+    <div style="margin: 20px; margin-top: 20px; background: red;">div2</div>
+  </div>
+  <div>div3</div>
+</body>
+</html>`,
+`<html>
+<head>
+  <style>
+  div { padding: 12px; }
+  .a { background: #ff0000; }
+  .b { background: #ffa500; }
+  .c { background: #ffff00; }
+  .d { background: #008000; }
+  .e { background: #0000ff; }
+  .f { background: #4b0082; }
+  .g { background: #800080; }
+  </style>
+</head>
+<body id="foo">
+  <div class="a">
+    <div class="b">
+      <div class="c">
+        <div class="d">
+          <div class="e">
+            <div class="f">
+              <div class="g">
+              </div>
+            </div>
+          </div>
+          <div class="e">
+            <div class="f">
+              <div class="g">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>`
+      ];
+      
+      textarea.value = preloads[0];
+      select.addEventListener('change', function() {
+        textarea.value = preloads[select.value];
+      });
+      
+      cstyle = getComputedStyle(canvas);
+      canvas.setAttribute('width', cstyle.width);
+      canvas.setAttribute('height', cstyle.height);
       button.addEventListener('click', function() {
         var dom = new DOMParser().parseFromString(textarea.value, 'text/html');
         var ctx = canvas.getContext("2d");
