@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>jebkit playgrorund</title>
+      <script src="../lib/jebkit.bundle.js"></script>
+      <style>
+        body {
+          display: flex;
+        }
+        body > * {
+          flex: 1 0 auto;
+        }
+        div {
+          text-align: right;
+        }
+        textarea {
+          box-sizing: border-box;
+          width: 100%;
+          min-height: 300px;
+        }
+        canvas {
+          border: 1px solid black;
+        }
+      </style>
+    </head>
+  <body>
+    <div>
+      <textarea id="textarea"><html><head><style>
+#foo {
+  background: white;
+}
+body {
+  color: red !important;
+  background: green;
+  padding: 2px;
+  padding-left: 1px;
+}
+div {
+  height: 10px;
+  background: blue;
+  margin-top: 10px;
+}
+</style>
+</head>
+<body id="foo">
+  <div>
+    <div style="background: green; margin: 10px;">div2</div>
+  </div>
+  <div style="background: green;"><div style="margin: 20px; margin-top: 20px; background: red;">div2</div></div>
+  <div>div3</div>
+</body>
+</html></textarea>
+      <button id="button">Render</button>
+    </div>
+    <canvas id="canvas"></canvas>
+    <script type="text/javascript">
+      var textarea = document.getElementById('textarea');
+      var button = document.getElementById('button');
+      var canvas = document.getElementById('canvas');
+
+      button.addEventListener('click', function() {
+        var dom = new DOMParser().parseFromString(textarea.value, 'text/html');
+        var ctx = canvas.getContext("2d");
+        
+        jebkit.render(dom, ctx);
+      });
+    </script>
+  </body>
+</html>

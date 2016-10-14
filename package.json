@@ -1,0 +1,29 @@
+{
+  "name": "jebkit",
+  "version": "0.0.0",
+  "description": "A way to render an HTML page onto a canvas context.",
+  "directories": {
+    "lib": "./lib"
+  },
+  "main": "./lib/jebkit.js",
+  "scripts": {
+    "test": "./node_modules/.bin/jasmine-node ./test",
+    "browser": "phantomjs test/run-jasmine.js test/jasmine.html",
+    "build": "uglifyjs lib/jebkit.js -c \"evaluate=false\" -m --source-map jebkit-min.map -o jebkit-min.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Airhogs777/jebkit.git"
+  },
+  "keywords": [
+    "render"
+  ],
+  "author": "Airhogs777",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Airhogs777/jebkit/issues"
+  },
+  "devDependencies": {
+    "webpack": "^1.13.2"
+  }
+}
