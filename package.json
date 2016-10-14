@@ -7,8 +7,6 @@
   },
   "main": "./lib/jebkit.js",
   "scripts": {
-    "test": "./node_modules/.bin/jasmine-node ./test",
-    "browser": "phantomjs test/run-jasmine.js test/jasmine.html",
     "build": "uglifyjs lib/jebkit.js -c \"evaluate=false\" -m --source-map jebkit-min.map -o jebkit-min.js"
   },
   "repository": {
