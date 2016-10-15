@@ -28,6 +28,7 @@
       <select id="select">
         <option value="0">orig</option>
         <option value="1">toy-layout-engine</option>
+        <option value="2" selected>text</option>
       </select>
       <textarea id="textarea"></textarea>
       <button id="button">Render</button>
@@ -105,10 +106,25 @@
     </div>
   </div>
 </body>
+</html>`,
+`<html>
+<head>
+  <style>
+    body {
+      color: blue;
+    }
+    span {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+outer<span>inner</span>outer
+</body>
 </html>`
       ];
       
-      textarea.value = preloads[0];
+      textarea.value = preloads[select.value];
       select.addEventListener('change', function() {
         textarea.value = preloads[select.value];
       });
@@ -120,6 +136,14 @@
         var dom = new DOMParser().parseFromString(textarea.value, 'text/html');
         var ctx = canvas.getContext("2d");
         
+        if (typeof console._commandLineAPI !== 'undefined') {
+          console._commandLineAPI.clear();
+        } else if (typeof console._inspectorCommandLineAPI !== 'undefined') {
+          console._inspectorCommandLineAPI.clear()
+        } else if (typeof console.clear !== 'undefined') {
+          console.clear();
+        }
+
         jebkit.render(dom, ctx);
       });
     </script>
